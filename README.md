@@ -5,4 +5,6 @@ My PhD thesis
 
 2. cleanup.sh script is then used to delete all extra files after compilation.
 
+Link to Edinburgh Research Archive: https://www.era.lib.ed.ac.uk/handle/1842/5751
+
 TO DO: find out an exact sequence of compilation commands for both Mac and Linux
