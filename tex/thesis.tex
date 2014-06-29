@@ -1,0 +1,68 @@
+%thesis.tex 
+%Model LaTeX file for Ph.D. thesis at the 
+%School of Mathematics, University of Edinburgh
+
+\documentclass[12pt,openright]{report} 
+\usepackage[phd, onehalf]{styles/edmaths}
+\usepackage[Sonny]{styles/fncychap}
+\usepackage{graphicx}
+\usepackage{styles/cite}
+\usepackage{fixltx2e}
+\usepackage{indentfirst}
+\usepackage{textcomp}
+\usepackage{color}
+\usepackage[intoc]{nomencl}
+\usepackage[titletoc]{appendix}
+
+%avoiding the hyphenation
+%\hyphenpenalty=5000
+%\tolerance=1000
+
+\begin{document}
+\title{Computational Study of Electrostatic Contribution to Membrane Dynamics}
+\author{Vladimir Kiselev}
+\date{2011}
+\maketitle
+\declaration
+\pagenumbering{roman}
+\dedication{This thesis is dedicated to my mum, my wife, and my children.}
+%\preface
+\acknowledgements
+\myabstract
+\renewcommand{\contentsname}{Table of Contents}
+\cleardoublepage
+\addcontentsline{toc}{chapter}{Table of Contents}
+\tableofcontents
+\makenomenclature
+\renewcommand{\nomname}{List of Abbreviations}
+
+\cleardoublepage
+\addcontentsline{toc}{chapter}{List of Figures}
+\listoffigures
+
+\cleardoublepage
+\printnomenclature[1in]
+\include{listOfAbbreviations}
+\cleardoublepage
+
+\pagenumbering{arabic}
+\include{1_chap}
+\include{2_chap}
+\include{3_chap}
+\include{4_chap}
+\include{5_chap}
+\include{conclusions}
+
+\begin{appendices}
+\include{A_app}
+\include{B_app}
+\include{C_app}
+\end{appendices}
+
+\begin{spacing}{1.0}
+\addcontentsline{toc}{chapter}{Bibliography}
+\bibliographystyle{ieeetr}
+\bibliography{bibliography}
+\end{spacing}
+
+\end{document}

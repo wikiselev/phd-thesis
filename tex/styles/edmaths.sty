@@ -1,0 +1,238 @@
+%%  Package `edmaths' (26.8.2008)
+%%
+%%  A LaTeX 2e style file for typesetting a
+%%  PhD thesis / First-Year Report / Master thesis / Fourth-year project 
+%%  in the School of Mathematics, University of Edinburgh
+%%
+%%  By Thomas Koeppe, 2006-7
+%%
+%%
+%%  Usage:
+%%  ------
+%%  Use \documentclass{report}
+%%  and \usepackage[{phd|firstyear|y4project|...},...]{edmaths}.
+%%
+%%  Do define \title, \author, \date before loading this package!
+%%
+%%  See documentation at http://www.maths.ed.ac.uk/pg/edmaths.html
+%%
+%%
+%%  Example usage:
+%%  --------------
+%%
+%%  \documentclass[12pt,oneside]{report}
+%%  \title{Report Title}
+%%  \date{Report Date}
+%%  \author{Author Name}
+%%  \usepackage[phd,fancyhdr,hyperref,colour]{edmaths}
+%%  \flushbottom
+%%
+%%  \begin{document}
+%%  \pagenumbering{roman}
+%%  \maketitle
+%%
+%%  \begin{abstract} ... Abstract text ... \end{abstract}
+%%  \declaration
+%%  \dedication{...dedication text...}
+%%
+%%  \tableofcontents
+%%  \addcontentsline{toc}{chapter}{Contents}
+%%  \newpage
+%%  \pagenumbering{arabic}
+%%
+%%  [Main document body here, e.g. \chaper{...} \section{...} ... ]
+%%
+%% \bibliographystyle{...}  % Or use the `amsrefs' package (http://www.ams.org/tex/amsrefs.html)!
+%% \bibliography{bibliography file}
+%% \addcontentsline{toc}{chapter}{Bibliography}
+%% \end{document}
+%%
+%% ---------------
+
+
+
+
+
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{edmaths}[2007/02/05 Edinburgh maths thesis/report style v0.95]
+
+\RequirePackage{calc,ifthen,setspace,amsmath,amsthm,amscd,amssymb}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Set up the page size and margins %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\setlength{\paperheight}{297mm}    % A4 Paper
+\setlength{\paperwidth}{210mm}     %
+\setlength{\oddsidemargin}{14.6mm} %  Left/Inside: 4.0cm (rel. -1in)
+\setlength{\evensidemargin}{-.4mm} %  Right/Outside: 2.5cm (rel. -1in)
+\setlength{\topmargin}{-17.4mm}    % \
+\setlength{\headheight}{6mm}       % | Top: 2.0cm (rel. -1in), out of which 6mm for the header
+\setlength{\headsep}{6mm}          % /
+\setlength{\textwidth}{145mm}      % Margins: 2.5cm + 4cm
+% Textheight delayed until we know the line spacing.
+
+% The following is removed in favour of the `report' class options "oneside/twoside".
+%\@twosidefalse \@mparswitchfalse  % Single-sided by default
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Provide some fancy option        %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newboolean{with-fourier}           % Use the `fourier' package for Adobe Utopia font
+\newboolean{with-hyperref}          % Use the `hyperref' package for clickable links and bookmarks, all black
+\newboolean{with-colour}            % Add sane colours to the hyperref links
+\newboolean{with-fancyhdr}          % Use the `fancyhdr' package to provide header and footer
+
+\ifthenelse{\isundefined{\degreetext}}{\newcommand{\degreetext}{Specify a degree option!}}{}
+\ifthenelse{\isundefined{\stretchfactor}}{\newcommand{\stretchfactor}{1}}{}
+\DeclareOption{fourier}{\setboolean{with-fourier}{true}}
+\DeclareOption{hyperref}{\setboolean{with-hyperref}{true}}
+\DeclareOption{colour}{\setboolean{with-colour}{true}}
+\DeclareOption{fancyhdr}{\setboolean{with-fancyhdr}{true}}
+
+\DeclareOption{phd}{\renewcommand{\degreetext}{Doctor of Philosophy}}
+\DeclareOption{firstyear}{\renewcommand{\degreetext}{First-Year Report\\Graduate School of Mathematics}}
+\DeclareOption{secondyear}{\renewcommand{\degreetext}{Second-Year Report\\Graduate School of Mathematics}}
+\DeclareOption{thirdyear}{\renewcommand{\degreetext}{Third-Year Report\\Graduate School of Mathematics}}
+\DeclareOption{y4project}{\renewcommand{\degreetext}{Year 4 Project\\School of Mathematics}}
+\DeclareOption{masterph}{\renewcommand{\degreetext}{Master of Philosophy}}
+\DeclareOption{mastersc}{\renewcommand{\degreetext}{Master of Science by Research}}
+
+\DeclareOption{single}{\renewcommand{\stretchfactor}{1}}
+\DeclareOption{onehalf}{\renewcommand{\stretchfactor}{1.5}}
+\DeclareOption{double}{\renewcommand{\stretchfactor}{2}}
+
+%\DeclareOption{oneside}{\@twosidefalse \@mparswitchfalse}  % Single-sided by default
+%\DeclareOption{twosides}{\@twosidetrue \@mparswitchtrue}
+
+\ProcessOptions
+
+\ifthenelse{\boolean{with-fourier}}
+  { \RequirePackage{cmap}
+    \RequirePackage{fourier}
+    \RequirePackage[T1]{fontenc}
+    \RequirePackage{microtype}
+  } {}
+
+\ifthenelse{\boolean{with-hyperref}}
+  {
+    \RequirePackage[dvipsnames]{xcolor}
+    \RequirePackage[pdftitle={\@title}, pdfauthor={\@author}, pdfcreator={PDFLaTeX with edmaths}, pdfpagelayout=OneColumn, colorlinks=true, linkcolor=black, urlcolor=black, citecolor=black]{hyperref}
+  \ifthenelse{\boolean{with-colour}}
+    {
+      \hypersetup{linkcolor=Sepia, urlcolor=NavyBlue, citecolor=Sepia}
+    } {}
+  } {}
+
+\ifthenelse{\boolean{with-fancyhdr}}
+  {
+    \RequirePackage{fancyhdr}
+    \pagestyle{fancy}
+    \fancyhf{}
+    \fancyhead[RO,LE]{\thepage}
+    \fancyfoot[RO,LE]{\thepage}
+    \fancyhead[LO]{\it\@title}
+    \fancyhead[RE]{\@author}
+    \fancyfoot[RE,LO]{}
+  } {}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Set up the text body height      %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% For the text height, we calculate the largest number of lines that gives us no more than 4cm bottom margin.
+% This depends on the line spacing, which we need first.
+
+\setstretch{\stretchfactor}
+
+% Debug only: In the next line, \XXXfactor contains the number of lines on a text-only page.
+%\newlength{\XXXunit}\setlength{\XXXunit}{1pt}\newlength{\XXXfactor}\setlength{\XXXfactor}{1pt + ((672pt - \topskip) / \baselineskip) * \XXXunit}
+\newlength{\scratchlength}\setlength{\scratchlength}{\topskip + ((672pt - \topskip) / \baselineskip) * \baselineskip + \baselineskip}
+\setlength{\textheight}{\scratchlength}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Make the title page etc          %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\renewcommand{\maketitle}{%
+  \begin{titlepage}
+    \singlespacing
+    \addtolength{\oddsidemargin}{-0.75cm}
+    \begin{center}
+    \null\vskip 4.1cm
+    \begin{minipage}[t][7.6cm]{10.5cm}
+      \begin{center}
+      {\LARGE\textbf{\@title}\par}\vfill
+      {\Large\textit{\@author}\par}
+      \end{center}
+    \end{minipage}
+    \vfill
+    {\Large\degreetext \par University of Edinburgh \par\@date \par}
+    \end{center}
+  \end{titlepage}
+  \if@twoside
+    \thispagestyle{empty}
+    \cleardoublepage
+  \else
+    \addtocounter{page}{1}
+  \fi
+}
+
+\newcommand{\declaration}{%
+  \chapter*{Declaration}
+%\addcontentsline{toc}{chapter}{Declaration}
+
+  I declare that this thesis was composed by myself,
+   that the work contained therein is my own, 
+  except where explicitly stated otherwise in the text, and that no part of this thesis has been submitted to any other university
+in application for a higher degree.
+
+
+  {\raggedleft\vspace{2cm}(\textit{\@author})
+
+  }
+}
+
+\newcommand{\preface}{%
+  \chapter*{Preface}
+This work has been done by me at the University of Edinburgh under the supervision of Dr. Andrew Goryachev.
+\addcontentsline{toc}{chapter}{Preface}
+}
+
+\newcommand{\acknowledgements}{%
+  \chapter*{Acknowledgements}
+\addcontentsline{toc}{chapter}{Acknowledgements}
+
+I would like to thank my supervisor, Dr. Andrew Goryachev, for his guidance, advice and support throughout my PhD time. His inspiration and bright ideas always motivated me to think differently, as all good scientists do. Under his supervision I have obtained not only new computational and analytical skills, but also an invaluable knowledge of how science works. Moreover, I greatly appreciate his help and proactivity in organization of all the formal stages of my PhD, especially during the admission period.
+
+I would also like to thank our unexpendable collaborator, Dr. Davide Marenduzzo, without whom this project could not get to a happy end. A special thanks to Davide for saving my commitment to a life. Namely, for his ability to instantly find a bug in my code, which I have spent weeks on.
+
+Additional thanks to Dr. Marcin Leda for his priceless knowledge of non-linear dynamics and statistical mechanics, which he was always happy to share with me. Great thanks to Dr. Alexander Morozov for his help with numerical methods and for his ever positive mood.
+
+This PhD would not be completed without my mum, who has always supported me at every stage of my life, my beloved wife, who is my main motivator, and my children, who make my life happy. Additional warm-hearted thanks to all my Edinburgh friends, who are always nearby and ready to help. A final great thanks to the Darwin Trust of Edinburgh for the financial support.
+}
+
+%\renewenvironment{abstract}{\chapter*{\abstractname}}{\addcontentsline{toc}{chapter}{\abstractname}}
+
+\newcommand{\dedication}[1]{%
+  \clearpage
+%\addcontentsline{toc}{chapter}{Dedication}
+  \thispagestyle{plain}
+  \vspace*{7cm}
+  \begin{center}
+    \large\it #1
+  \end{center}
+}
+
+\newcommand{\myabstract}{%
+  \chapter*{Abstract}
+%\label{ch:abstract}
+\addcontentsline{toc}{chapter}{Abstract}
+Electrostatics plays a crucial role in the membrane biology. Negatively charged lipids (such as PS, PA and PIP$_2$) are subject to redistribution under the action of electrostatic forces during various signalling events. Membrane recruitment of multiple signalling proteins (such as MARCKS or Src kinase) is often maintained by positively charged polybasic domains (PD). Even though adsorption of these proteins to the cellular membrane has been extensively investigated, very little is known about how electrostatic interactions contribute to their membrane lateral dynamics. This thesis presents an investigation of the contribution of electrostatic interactions to the membrane lateral dynamics by means of novel computational tools. First, I developed a dynamic Monte-Carlo automaton that faithfully simulates lateral diffusion of the adsorbed positively charged PD of a peripheral membrane protein, as well as the dynamics of mono- (PS, PA) and polyvalent (PIP$_2$) anionic lipids within the bilayer. This model allowed to investigate the major characteristics of protein-membrane diffusion on the uniform membrane. In agreement with earlier results, the simulations revealed the following microscopic phenomena: 1) Electrostatic lipid demixing in the vicinity of the PD; 2) PD interacts with PIP$_2$ stronger than with monovalent lipids. On the spatially heterogeneous membrane the automaton predicted a directional drift of the PD, which was validated by a simple mean-field analytical model. The predicted phenomenon could potentially play a major role in membrane domain formation. To test this hypothesis and to investigate the membrane dynamics on larger scales I developed a continuous model, which was based on the results of the automaton simulations. The results of the continuous model and the Monte-Carlo simulations were shown to be in quantitative agreement. The continuous model allows one to simulate the electrostatic membrane dynamics on micrometer scales and can be used to describe various biologically important processes, such as endocytic cup initiation.
+
+}

@@ -1,0 +1,14 @@
+\chapter{Concentrations of lipids and peptide complexes}
+
+\label{appendix_concentration}
+
+Since the bulk concentration of mobile ions is usually given in M (mol/l), the concentration of lipids is usually given in a percentage of the total membrane concentration $C_m$ and the concentration of peptides is given in molecules/nm$^2$, it is important to choose one working unit of the concentration and rescale all other units to the chosen one. I choose the working concentration units to be M. To find the concentration of lipids and peptide complexes in M I use the Guggenheim model of a surface \cite{McLaughlin1995}. According to this model a piece of the membrane $S$ with two equal vertical extensions $h/2$ should be considered, where $h$ is the height of the resulting parallelepiped. I choose $S=$1 $\mu$m$^2$. Assume there are $N$ particles (lipids or peptide complexes) evenly distributed on $S$. Concentration of these particles in M units will be:
+\begin{equation}
+ \label{concentration_transformation0}C = \frac{N}{N_AV}
+\end{equation}
+where $V=Sh$ is the volume (a parallelepiped) of space where the concentration is measured. The height $h$ can be defined by extending $S$ by 5 nm in the third (vertical) dimension on both sides, so that the $h=10$nm. The value of the volume is then: $V = 1\hspace{0.08in} \mu \text{m}^2 \cdot 10\hspace{0.08in} \text{nm} = 10^{-2}\hspace{0.07in} \mu \text{m}^3$. Substitution of this value and $N_A$ to the eq. \eqref{concentration_transformation0} yields:
+\begin{equation}
+ \label{concentration_transformation1}C = N\frac{10^{-6}}{6.02}\hspace{0.08in} [\text{M}]
+\end{equation}
+
+Equation \eqref{concentration_transformation1} allows one to compute a concentration of $N$ uniformly distributed particles on surface $S=$1 $\mu$m$^2$ in M units. Taking into account that an average area per lipid is about 0.6 nm$^2$ \cite{Petrache2000}, one can find that there are about 1.7$\cdot10^6$ lipids in 1 $\mu$m$^2$ piece of the membrane. Substituting this value to eq. \eqref{concentration_transformation1} one can obtain an average total membrane concentration $C_m$ = 0.3 M. Based on the experimental data \cite{Prior2003,Hancock2005}, I choose an average concentration of peptide complexes to be about $100$ $\mu$M.
