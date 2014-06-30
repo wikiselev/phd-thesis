@@ -7,7 +7,9 @@ cleanup.sh script is then used to delete all extra files after compilation.
 
 __List of abbreviations is not included in the final output file!!!__: this is still related to a compilation process. In the past I used this sequence of steps to include/update the list of abbreviations:
 
-1. Run LaTeX 2 times then
+1. Run LaTeX 2 times
+
+
 2.
 
 ```bash
