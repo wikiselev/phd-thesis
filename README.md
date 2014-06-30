@@ -3,7 +3,7 @@ My PhD thesis
 
 1. Compiled on a Mac computer using [LatexTools](https://github.com/SublimeText/LaTeXTools) (Cmd+b shortcut) in [Sublime text editor](http://www.sublimetext.com/).
 
-__List of abbreviations is not included in the final final!!!__: this is still related to a compilation process. In the past I used this sequence of steps to include/update the list of abbreviations:
+__List of abbreviations is not included in the final output file!!!__: this is still related to a compilation process. In the past I used this sequence of steps to include/update the list of abbreviations:
 
 * Run LaTeX 2 times then
 * ```bash makeindex thesis.nlo  -s nomencl.ist -o thesis.nls ```
